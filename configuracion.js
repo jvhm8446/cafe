@@ -1,0 +1,1 @@
+window.CAFE_CONFIG={apiKey:"",authDomain:"",databaseURL:"",projectId:"",appId:""};
