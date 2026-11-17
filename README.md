@@ -1,4 +1,4 @@
-# Café — menú digital para 2 Smart TV
+# Mi Cafetería — menú digital para 2 Smart TV
 
 Aplicación web independiente de ChatGPT. Permite cambiar precios, productos y disponibilidad con botones desde el celular. La pantalla 1 y la pantalla 2 se actualizan mediante Firebase Realtime Database. Sin equipo central ni suscripción de pago obligatoria para el piloto. Requiere internet y un navegador compatible en los televisores.
 
@@ -36,3 +36,4 @@ Para autorizar a otra persona, comparte el enlace del Panel. Que inicie sesión 
 - Firebase Realtime Database permite lectura pública de productos para la TV y restringe escritura por identidad.
 - GitHub Pages para repositorios públicos y el plan Spark de Firebase ofrecen una opción gratuita sujeto a límites. Antes de uso continuo prueba las dos pantallas y el navegador de los TV.
 - Firebase es obligatorio para sincronizar los cambios del panel; GitHub Pages solo sirve los archivos.
+
