@@ -9,6 +9,10 @@
 .top p{margin:5px 0 0;color:#f0d1bd}
 .admin-logo{display:block;width:154px;max-width:100%;height:auto;margin-bottom:12px}
 
+.screen-heading{margin:0 0 12px;color:#6c3541}
+.screen-icon{display:block;width:64px;height:52px}
+.screen-icon text{font:700 23px "DM Sans",system-ui,Arial,sans-serif}
+
 .field-help{margin:0.15rem 0 0.75rem}
 .categories{min-width:0;padding:0;border:0;margin:1rem 0}
 .categories legend{padding:0;margin-bottom:0.5rem;font-weight:650}
@@ -35,7 +39,29 @@
 <p id="status" role="status">Cargando…</p>
 <section id="login" class="card" hidden><h2>Acceso al menú</h2><p>Modifica productos y precios desde el celular, sin editar código.</p><button id="signin" class="primary">Entrar con Google</button></section>
 <section id="notallowed" class="card" hidden><h2>Activar permiso de edición</h2><p>Comparte este código con el propietario. En la primera instalación, registra este código como propietario en Firebase.</p><input id="uid" readonly aria-label="Tu código de usuario"><button id="copyuid" class="outline">Copiar código</button></section>
-<div id="dash" hidden><div class="screens"><article class="card"><h2>Pantalla 1</h2><a class="outline" href="tv.html?pantalla=1" target="_blank" rel="noopener">Abrir menú</a></article><article class="card"><h2>Pantalla 2</h2><a class="outline" href="tv.html?pantalla=2" target="_blank" rel="noopener">Abrir menú</a></article></div>
+<div id="dash" hidden>
+  <div class="screens">
+    <article class="card">
+      <h2 class="screen-heading" aria-label="Pantalla 1">
+        <svg class="screen-icon" viewBox="0 0 64 52" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="58" height="36" rx="6" fill="#faf3e9" stroke="currentColor" stroke-width="3"/>
+          <path d="M32 39v9m-12 0h24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <text x="32" y="29" text-anchor="middle" fill="currentColor">1</text>
+        </svg>
+      </h2>
+      <a class="outline" href="tv.html?pantalla=1" target="_blank" rel="noopener" aria-label="Abrir menú de Pantalla 1">Abrir menú</a>
+    </article>
+    <article class="card">
+      <h2 class="screen-heading" aria-label="Pantalla 2">
+        <svg class="screen-icon" viewBox="0 0 64 52" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="58" height="36" rx="6" fill="#faf3e9" stroke="currentColor" stroke-width="3"/>
+          <path d="M32 39v9m-12 0h24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <text x="32" y="29" text-anchor="middle" fill="currentColor">2</text>
+        </svg>
+      </h2>
+      <a class="outline" href="tv.html?pantalla=2" target="_blank" rel="noopener" aria-label="Abrir menú de Pantalla 2">Abrir menú</a>
+    </article>
+  </div>
 <section class="card"><div class="split"><div><h2>Productos</h2></div><button id="new" class="primary">+ Agregar</button></div><div id="list"></div></section>
 <section id="editor" class="card" hidden><div class="split"><h2 id="editorname">Producto</h2><button id="close" class="outline">Cerrar</button></div><form id="form">
 <label>Nombre en español<input id="name" maxlength="80" required placeholder="Café americano"></label>
