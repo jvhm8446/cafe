@@ -8,11 +8,20 @@
 .top .outline{border-color:#b38775;background:transparent;color:#fff2df}
 .top p{margin:5px 0 0;color:#f0d1bd}
 .admin-logo{display:block;width:154px;max-width:100%;height:auto;margin-bottom:12px}
+
+.field-help{margin:0.15rem 0 0.75rem}
+.categories{min-width:0;padding:0;border:0;margin:1rem 0}
+.categories legend{padding:0;margin-bottom:0.5rem;font-weight:650}
+.category-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(138px,1fr));gap:7px}
+.category-options label{display:flex;align-items:center;gap:7px;margin:0;padding:8px;min-height:42px;border:1px solid #eadbce;border-radius:8px;font-size:0.88rem;cursor:pointer}
+.category-options input{width:17px;height:17px;margin:0;padding:0;flex:none;accent-color:#6c3541}
+.product-english{margin:0.15em 0;font-style:italic}
 </style>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-<script defer src="configuracion.js"></script></head>
+<script defer src="configuracion.js"></script>
+<script defer src="menu-ingles.js"></script></head>
 <body><main><header class="top"><div><img class="admin-logo" src="assets/lcc-logo.png" width="840" height="349" alt="Latin Cultural Centre by NA"><h1>Mi Cafetería</h1><p>Panel de administración</p></div><button id="signout" class="outline" hidden>Cerrar sesión</button></header>
 <p id="status" role="status">Cargando…</p>
 <section id="login" class="card" hidden><h2>Acceso al menú</h2><p>Modifica productos y precios desde el celular, sin editar código.</p><button id="signin" class="primary">Entrar con Google</button></section>
@@ -20,9 +29,29 @@
 <div id="dash" hidden><div class="screens"><article class="card"><h2>Pantalla 1</h2><a class="outline" href="tv.html?pantalla=1" target="_blank" rel="noopener">Abrir menú</a></article><article class="card"><h2>Pantalla 2</h2><a class="outline" href="tv.html?pantalla=2" target="_blank" rel="noopener">Abrir menú</a></article></div>
 <section class="card"><div class="split"><div><h2>Productos</h2></div><button id="new" class="primary">+ Agregar</button></div><div id="list"></div></section>
 <section id="editor" class="card" hidden><div class="split"><h2 id="editorname">Producto</h2><button id="close" class="outline">Cerrar</button></div><form id="form">
-<label>Nombre<input id="name" maxlength="80" required placeholder="Café americano"></label><label>Categoría<input id="category" maxlength="40" list="categories" required placeholder="Bebidas calientes"></label><datalist id="categories"><option value="Bebidas calientes"><option value="Bebidas frías"><option value="Snacks"><option value="Postres"></datalist>
+<label>Nombre en español<input id="name" maxlength="80" required placeholder="Café americano"></label>
+<label for="name-en">Nombre en inglés</label>
+<input id="name-en" lang="en" maxlength="80" placeholder="Americano" aria-describedby="english-help">
+<p class="small field-help" id="english-help">Las sugerencias aparecen para productos comunes. Puedes editar el nombre en inglés.</p>
+<fieldset class="categories" id="categories">
+  <legend>Categoría</legend>
+  <div class="category-options">
+    <label><input type="radio" name="product-category" value="Bebidas calientes" required> Bebidas calientes</label>
+    <label><input type="radio" name="product-category" value="Bebidas frías"> Bebidas frías</label>
+    <label><input type="radio" name="product-category" value="Desayunos"> Desayunos</label>
+    <label><input type="radio" name="product-category" value="Comidas"> Comidas</label>
+    <label><input type="radio" name="product-category" value="Sándwiches"> Sándwiches</label>
+    <label><input type="radio" name="product-category" value="Snacks y antojitos"> Snacks y antojitos</label>
+    <label><input type="radio" name="product-category" value="Panadería"> Panadería</label>
+    <label><input type="radio" name="product-category" value="Postres"> Postres</label>
+    <label><input type="radio" name="product-category" value="Frutas y yogures"> Frutas y yogures</label>
+    <label><input type="radio" name="product-category" value="Combos"> Combos</label>
+    <label><input id="other-category" type="radio" name="product-category"> Otra categoría</label>
+  </div>
+  <label id="custom-category-field" hidden>Nombre de la categoría<input id="custom-category" maxlength="40"></label>
+</fieldset>
 <div class="columns"><label>Precio (CAD)<input id="price" type="number" min="0" max="1000000" step="0.01" inputmode="decimal" required></label><label>Mostrar en<select id="screen"><option value="both">Ambas pantallas</option><option value="1">Pantalla 1</option><option value="2">Pantalla 2</option></select></label></div>
-<label class="check"><input id="available" type="checkbox" checked>Disponible</label><div class="actions"><button id="save" class="primary" type="submit">Guardar</button><button id="remove" class="danger" type="button" hidden>Eliminar</button></div><p id="editstatus"></p></form></section>
+<label class="check"><input id="available" type="checkbox" checked>Disponible</label><div class="actions"><button id="save" class="primary" type="submit">Guardar</button><button id="remove" class="danger" type="button" hidden>Eliminar</button></div><p id="editstatus" role="status"></p></form></section>
 <details id="permissions" class="card" hidden><summary><b>Administrar accesos de otras personas</b></summary><p>Pide a la persona que ingrese con Google y te comparta su código. Puedes autorizar o retirar el acceso.</p><form id="inviteform"><label>Código de usuario<input id="otheruid" required spellcheck="false"></label><label>Nombre de la persona<input id="othername" maxlength="80" required></label><button id="invite" class="primary" type="submit">Dar acceso</button></form><p id="accessstatus"></p><div id="editors"></div></details></div>
 </main><script>
 window.addEventListener('load',function(){
@@ -35,17 +64,109 @@ if(!window.firebase||!cfg.apiKey||!cfg.databaseURL){msg('status','Falta conectar
 firebase.initializeApp(cfg);
 var auth=firebase.auth(),db=firebase.database(),catalog=db.ref('menu/products'),current=null,role=null,editing=null,products={},stopProducts=function(){},stopEditors=function(){},stopRole=function(){},version=0;
 function show(r){role=r;stopProducts();stopEditors();stopProducts=function(){};stopEditors=function(){};$('login').hidden=!!current;$('signout').hidden=!current;$('notallowed').hidden=!current||!!r;$('dash').hidden=!r;$('permissions').hidden=r!=='owner';$('editor').hidden=true;if(current)$('uid').value=current.uid;if(r){var a=function(s){products=s.val()||{};render()};catalog.on('value',a,function(e){msg('status',e.message)});stopProducts=function(){catalog.off('value',a)};if(r==='owner'){var b=function(s){renderEditors(s.val()||{})};db.ref('roles/editors').on('value',b);stopEditors=function(){db.ref('roles/editors').off('value',b)}}}}
-function render(){var l=$('list');l.textContent='';var entries=Object.entries(products).sort(function(a,b){return a[1].name.localeCompare(b[1].name)});if(!entries.length)node(l,'p','Agrega tu primer producto para comenzar.');entries.forEach(function(entry){var id=entry[0],p=entry[1],r=node(l,'div',null,'line'),t=node(r,'div',null),right=node(r,'div',null);node(t,'b',p.name);node(t,'div',p.category+' · '+(p.screen==='both'?'Ambas':('Pantalla '+p.screen))+(p.available?'':' · Agotado'),'small');node(right,'strong','$'+(p.cents/100).toFixed(2));var b=node(right,'button','Editar','outline');b.style.marginLeft='10px';b.onclick=function(){edit(id)}})}
+function render(){var l=$('list');l.textContent='';var entries=Object.entries(products).sort(function(a,b){return a[1].name.localeCompare(b[1].name)});if(!entries.length)node(l,'p','Agrega tu primer producto para comenzar.');entries.forEach(function(entry){var id=entry[0],p=entry[1],r=node(l,'div',null,'line'),t=node(r,'div',null),right=node(r,'div',null);node(t,'b',p.name);var english=window.CAFE_ENGLISH.label(p);if(english)node(t,'div',english,'small product-english').lang='en';node(t,'div',p.category+' · '+(p.screen==='both'?'Ambas':('Pantalla '+p.screen))+(p.available?'':' · Agotado'),'small');node(right,'strong','$'+(p.cents/100).toFixed(2));var b=node(right,'button','Editar','outline');b.style.marginLeft='10px';b.onclick=function(){edit(id)}})}
 function renderEditors(obj){var l=$('editors');l.textContent='';Object.entries(obj).forEach(function(entry){var r=node(l,'div',null,'line');node(r,'span',entry[1]);var b=node(r,'button','Quitar acceso','danger');b.onclick=async function(){if(!confirm('¿Quitar acceso a '+entry[1]+'?'))return;try{await db.ref('roles/editors').child(entry[0]).remove();msg('accessstatus','Acceso retirado.')}catch(e){msg('accessstatus',e.message)}}})}
 auth.onAuthStateChanged(async function(u){version++;var v=version;stopRole();stopRole=function(){};current=u;show(null);msg('status',u?'Verificando permisos…':'');if(!u)return;try{var s=await db.ref('roles/owner').once('value');if(v!==version)return;if(s.val()===u.uid){show('owner');msg('status','');return}}catch(e){if(v!==version)return;if(e.code!=='PERMISSION_DENIED'&&e.code!=='permission-denied'){msg('status',e.message);return}}var r=db.ref('roles/editors').child(u.uid);var callback=function(s){if(v!==version)return;show(s.exists()?'editor':null);msg('status','')};r.on('value',callback,function(e){msg('status',e.message)});stopRole=function(){r.off('value',callback)}},function(e){msg('status',e.message)});
 async function run(button,target,action){button.disabled=true;msg(target,'');try{await action()}catch(e){msg(target,'Error: '+e.message)}finally{button.disabled=false}}
 $('signin').onclick=function(){run(this,'status',function(){return auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())})};
 $('signout').onclick=function(){run(this,'status',function(){return auth.signOut()})};
 $('copyuid').onclick=async function(){try{await navigator.clipboard.writeText($('uid').value);msg('status','Código copiado.')}catch(e){$('uid').focus();$('uid').select()}};
-function edit(id){editing=id||null;var p=id?products[id]:null;$('editorname').textContent=p?'Editar producto':'Agregar producto';$('name').value=p?p.name:'';$('category').value=p?p.category:'';$('price').value=p?(p.cents/100).toFixed(2):'';$('screen').value=p?p.screen:'both';$('available').checked=p?p.available:true;$('remove').hidden=!p;$('editor').hidden=false;msg('editstatus','');$('name').focus()}
-$('new').onclick=function(){edit(null)};$('close').onclick=function(){$('editor').hidden=true};
-$('form').onsubmit=function(e){e.preventDefault();run($('save'),'editstatus',async function(){var p={name:$('name').value.trim(),category:$('category').value.trim(),cents:Math.round(Number($('price').value)*100),screen:$('screen').value,available:$('available').checked};if(!p.name||!p.category||!Number.isFinite(p.cents))throw Error('Datos inválidos');await (editing?catalog.child(editing):catalog.push()).set(p);$('editor').hidden=true;msg('status','Producto guardado y sincronizado.')})};
+var englishEdited = false;
+var categoryOptions = $('categories').querySelectorAll('input[type="radio"]');
+var customCategory = $('custom-category');
+
+function showCustomCategory() {
+  var custom = $('other-category').checked;
+  $('custom-category-field').hidden = !custom;
+  customCategory.required = custom;
+}
+
+function selectCategory(category) {
+  var standard = category.trim().toLowerCase();
+  if (standard === 'comida') standard = 'comidas';
+  if (standard === 'snacks') standard = 'snacks y antojitos';
+  var matchingOption;
+  categoryOptions.forEach(function (option) {
+    option.checked = option.id !== 'other-category' && option.value.toLowerCase() === standard;
+    if (option.checked) matchingOption = option;
+  });
+  $('other-category').checked = !!category && !matchingOption;
+  customCategory.value = $('other-category').checked ? category : '';
+  showCustomCategory();
+}
+
+function currentCategory() {
+  var selected = $('categories').querySelector('input[type="radio"]:checked');
+  if (!selected) return '';
+  return selected.id === 'other-category' ? customCategory.value.trim() : selected.value;
+}
+
+function suggestEnglish() {
+  if (!englishEdited) $('name-en').value = window.CAFE_ENGLISH.suggest($('name').value);
+}
+
+function edit(id) {
+  editing = id || null;
+  var product = id ? products[id] : null;
+  $('editorname').textContent = product ? 'Editar producto' : 'Agregar producto';
+  $('name').value = product ? product.name : '';
+  englishEdited = !!(product && product.nameEn);
+  $('name-en').value = englishEdited ? product.nameEn : '';
+  suggestEnglish();
+  selectCategory(product ? product.category : '');
+  $('price').value = product ? (product.cents / 100).toFixed(2) : '';
+  $('screen').value = product ? product.screen : 'both';
+  $('available').checked = product ? product.available : true;
+  $('remove').hidden = !product;
+  $('editor').hidden = false;
+  msg('editstatus', '');
+  $('name').focus();
+}
+
+$('categories').addEventListener('change', showCustomCategory);
+$('name').addEventListener('input', suggestEnglish);
+$('name-en').addEventListener('input', function () {
+  englishEdited = !!this.value.trim();
+});
+$('new').onclick = function () { edit(null); };
+$('close').onclick = function () { $('editor').hidden = true; };
+$('form').onsubmit = function (event) {
+  event.preventDefault();
+  run($('save'), 'editstatus', async function () {
+    var product = {
+      name: $('name').value.trim(),
+      category: currentCategory(),
+      cents: Math.round(Number($('price').value) * 100),
+      screen: $('screen').value,
+      available: $('available').checked
+    };
+    if (!product.name || !product.category || !Number.isFinite(product.cents)) {
+      throw Error('Revisa el nombre, el precio y la categoría.');
+    }
+
+    var suggested = window.CAFE_ENGLISH.suggest(product.name);
+    var english = $('name-en').value.trim() || suggested;
+    if (!editing && !english) {
+      $('name-en').focus();
+      throw Error('Escribe el nombre del producto en inglés.');
+    }
+    if (english && english !== suggested) product.nameEn = english;
+
+    var reference = editing ? catalog.child(editing) : catalog.push();
+    try {
+      await reference.set(product);
+    } catch (error) {
+      if (product.nameEn && /permission.denied/i.test(error.code || error.message)) {
+        throw Error('Firebase rechazó el nombre en inglés. Si tienes permiso de edición, publica las reglas actualizadas.');
+      }
+      throw error;
+    }
+    $('editor').hidden = true;
+    msg('status', 'Producto guardado y sincronizado.');
+  });
+};
 $('remove').onclick=function(){if(!editing||!confirm('¿Eliminar este producto?'))return;run(this,'editstatus',async function(){await catalog.child(editing).remove();$('editor').hidden=true;msg('status','Producto eliminado.')})};
 $('inviteform').onsubmit=function(e){e.preventDefault();run($('invite'),'accessstatus',async function(){var id=$('otheruid').value.trim(),label=$('othername').value.trim();if(!/^[A-Za-z0-9_-]{1,128}$/.test(id)||!label||id===current.uid)throw Error('Código inválido');await db.ref('roles/editors').child(id).set(label);$('inviteform').reset();msg('accessstatus','Acceso autorizado.')})}
 });
 </script></body></html>
+

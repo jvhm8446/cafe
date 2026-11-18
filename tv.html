@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
 <link rel="stylesheet" href="tv.css">
 <script defer src="configuracion.js"></script>
+<script defer src="menu-ingles.js"></script>
 </head>
 <body>
 <main class="tv">
@@ -40,8 +41,9 @@
 <script>window.addEventListener('load',function(){'use strict';var screen=/[?&]pantalla=2(?:&|$)/.test(location.search)?'2':'1',cfg=window.CAFE_CONFIG||{},items=[],signature='',page=0,busy=false,queued=false,url='';document.getElementById('number').textContent='Pantalla '+screen;
 var button=document.getElementById('fullscreen'),root=document.documentElement,fn=root.requestFullscreen||root.webkitRequestFullscreen;if(fn)button.onclick=function(){try{var p=fn.call(root);if(p&&p.catch)p.catch(function(){})}catch(e){}};else button.hidden=true;
 function node(tag,parent,txt,cls){var n=document.createElement(tag);n.textContent=txt;if(cls)n.className=cls;parent.appendChild(n);return n}
-function draw(){var box=document.getElementById('items');box.textContent='';var offset=page%Math.max(1,Math.ceil(items.length/8))*8;items.slice(offset,offset+8).forEach(function(p){var row=node('div',box,'','item'),left=node('div',row,'');node('small',left,p.category,'category');node('h3',left,p.name);if(!p.available)node('div',left,'Agotado','sold');node('strong',row,'$'+(p.cents/100).toFixed(2))})}
+function draw(){var box=document.getElementById('items');box.textContent='';var offset=page%Math.max(1,Math.ceil(items.length/8))*8;items.slice(offset,offset+8).forEach(function(p){var row=node('div',box,'','item'),left=node('div',row,'');node('small',left,p.category,'category');node('h3',left,p.name);var english=window.CAFE_ENGLISH.label(p);if(english)node('div',left,english,'product-english').lang='en';if(!p.available)node('div',left,'Agotado','sold');node('strong',row,'$'+(p.cents/100).toFixed(2))})}
 function refresh(){if(busy){queued=true;return}busy=true;var r=new XMLHttpRequest();r.open('GET',url);r.timeout=10000;var finish=function(){busy=false;if(queued){queued=false;refresh()}};r.onload=function(){if(r.status===200){try{var obj=JSON.parse(r.responseText)||{};var next=Object.keys(obj).map(function(k){return obj[k]}).filter(function(p){return p&&(p.screen===screen||p.screen==='both')}).sort(function(a,b){return a.category.localeCompare(b.category)||a.name.localeCompare(b.name)}),s=JSON.stringify(next);if(s!==signature){signature=s;items=next;page=0;draw()}document.getElementById('status').textContent=items.length?'':'Aún no hay productos para esta pantalla.'}catch(e){document.getElementById('status').textContent='Error al leer el menú.'}}else document.getElementById('status').textContent='Sin conexión. Se mantiene el último menú.';finish()};r.onerror=r.ontimeout=function(){document.getElementById('status').textContent='Sin conexión. Se mantiene el último menú.';finish()};r.send()}
 if(!cfg.databaseURL){document.getElementById('status').textContent='Falta conectar Firebase. Configuración pendiente.';return}
 url=cfg.databaseURL.replace(/\/$/,'')+'/menu/products.json';refresh();setInterval(refresh,15000);setInterval(function(){if(items.length>8){page++;draw()}},12000);if(window.EventSource)try{var s=new EventSource(url);s.addEventListener('put',refresh);s.addEventListener('patch',refresh);s.addEventListener('cancel',function(){s.close()})}catch(e){}
 });</script></body></html>
+

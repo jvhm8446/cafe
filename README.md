@@ -37,3 +37,10 @@ Para autorizar a otra persona, comparte el enlace del Panel. Que inicie sesión 
 - GitHub Pages para repositorios públicos y el plan Spark de Firebase ofrecen una opción gratuita sujeto a límites. Antes de uso continuo prueba las dos pantallas y el navegador de los TV.
 - Firebase es obligatorio para sincronizar los cambios del panel; GitHub Pages solo sirve los archivos.
 
+
+
+## Categorías y nombres en inglés
+
+Cada producto tiene una categoría. El panel presenta diez categorías y permite ingresar una personalizada con **Otra categoría**. En las pantallas, el nombre en inglés aparece debajo del nombre en español cuando ambos son distintos.
+
+El panel propone nombres en inglés para productos comunes mediante un catálogo local. Si el nombre no tiene sugerencia, escribe el nombre en inglés al crear el producto. Para guardar un nombre personalizado, publica la versión actualizada de `firebase/reglas.json` en **Realtime Database → Reglas**. Las sugerencias del catálogo se muestran también en los productos existentes.

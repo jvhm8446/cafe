@@ -185,6 +185,14 @@ body {
   white-space: nowrap;
 }
 
+.item .product-english {
+  margin-top: 0.35em;
+  color: #e2c3b3;
+  font-size: clamp(14px, 1.18vw, 27px);
+  line-height: 1.2;
+  overflow-wrap: break-word;
+}
+
 .item .sold {
   display: inline-block;
   margin-top: 0.45em;
@@ -292,3 +300,4 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
